@@ -2,6 +2,12 @@
 
 import { useState } from 'react';
 import './style.css';
+import dynamic from "next/dynamic";
+
+const LocationPicker = dynamic(() => import("./LocationPicker"), {
+  ssr: false,
+  loading: () => <p>Loading map...</p>,
+});
 
 export default function InputPage() {
     const [description, setDescription] = useState("");
@@ -54,6 +60,7 @@ export default function InputPage() {
                         placeholder="Ort..."
                     />
                 </form>
+                <LocationPicker />
                 <form>
                     <label htmlFor="description">Beschreibung:</label>
                     <textarea
