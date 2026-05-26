@@ -91,7 +91,11 @@ export default function InputPage() {
                         onChange={(e) => setLocation(e.target.value)}
                         placeholder="Ort..."
                     />
-                    {locationStatus && <p className="location-status">{locationStatus}</p>}
+                    {locationStatus && (
+                        <p className="location-status" role="status" aria-live="polite">
+                            {locationStatus}
+                        </p>
+                    )}
                 </form>
                 <div className="map-picker">
                     <h2>Ort auf Karte wählen</h2>

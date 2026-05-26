@@ -59,7 +59,7 @@ export async function POST(req) {
   if (location) {
     try {
       const lookupPromise = nominatimQueue.then(() => lookupLocation(location));
-      nominatimQueue = lookupPromise.catch(() => null);
+      nominatimQueue = lookupPromise.catch(() => {});
       const coordinates = await lookupPromise;
 
       if (coordinates) {

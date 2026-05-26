@@ -13,6 +13,7 @@ type LocationPickerMapProps = {
     onSelect: (coordinates: Coordinates) => void;
 };
 
+// Geographic center of Germany.
 const DEFAULT_CENTER: [number, number] = [51.1657, 10.4515];
 const DEFAULT_ZOOM = 6;
 const SELECTED_ZOOM = 14;
@@ -45,7 +46,12 @@ export default function LocationPickerMap({ selectedCoordinates, onSelect }: Loc
 
     return (
         <div className="map-wrapper">
-            <MapContainer center={center} zoom={zoom} className="location-map">
+            <MapContainer
+                center={center}
+                zoom={zoom}
+                className="location-map"
+                aria-label="Interaktive Karte zur Ortsauswahl"
+            >
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

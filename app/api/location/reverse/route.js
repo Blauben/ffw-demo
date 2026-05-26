@@ -10,7 +10,7 @@ const parseCoordinate = (value) => {
     return Number.isFinite(parsed) ? parsed : null;
 };
 
-const isValidCoordinate = (lat, lon) => lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180;
+const areValidCoordinates = (lat, lon) => lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180;
 
 const reverseLookup = async (lat, lon) => {
     const elapsed = Date.now() - lastLookupAt;
@@ -49,12 +49,12 @@ export async function POST(req) {
         const lat = parseCoordinate(body?.lat);
         const lon = parseCoordinate(body?.lon);
 
-        if (lat === null || lon === null || !isValidCoordinate(lat, lon)) {
+        if (lat === null || lon === null || !areValidCoordinates(lat, lon)) {
             return Response.json({ error: 'Ungültige Koordinaten' }, { status: 400 });
         }
 
         const lookupPromise = lookupQueue.then(() => reverseLookup(lat, lon));
-        lookupQueue = lookupPromise.catch(() => null);
+        lookupQueue = lookupPromise.catch(() => {});
         const location = await lookupPromise;
 
         return Response.json({
