@@ -1,5 +1,7 @@
 import emitter from '@/lib/emitter';
 
+const BOUNDING_BOX_OFFSET = 0.01;
+
 export async function POST(req) {
   const body = await req.json();
   const enrichedBody = { ...body };
@@ -14,7 +16,7 @@ export async function POST(req) {
       });
       const response = await fetch(`https://nominatim.openstreetmap.org/search?${query.toString()}`, {
         headers: {
-          'User-Agent': 'ffw-demo/1.0',
+          'User-Agent': 'ffw-demo/1.0 (https://github.com/Blauben/ffw-demo)',
         },
       });
 
@@ -26,10 +28,10 @@ export async function POST(req) {
 
           if (Number.isFinite(lat) && Number.isFinite(lon)) {
             const bbox = [
-              (lon - 0.01).toFixed(5),
-              (lat - 0.01).toFixed(5),
-              (lon + 0.01).toFixed(5),
-              (lat + 0.01).toFixed(5),
+              (lon - BOUNDING_BOX_OFFSET).toFixed(5),
+              (lat - BOUNDING_BOX_OFFSET).toFixed(5),
+              (lon + BOUNDING_BOX_OFFSET).toFixed(5),
+              (lat + BOUNDING_BOX_OFFSET).toFixed(5),
             ];
 
             enrichedBody.location = {
@@ -42,8 +44,8 @@ export async function POST(req) {
           }
         }
       }
-    } catch {
-      // Keep the original location string if OpenStreetMap lookup fails.
+    } catch (error) {
+      console.warn('OpenStreetMap lookup failed for location payload.', error);
     }
   }
 
