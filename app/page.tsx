@@ -4,12 +4,22 @@
   import './input/style.css';
 
   export default function App() {
+    type EinsatzLocation = string | {
+      label: string;
+      lat: number;
+      lon: number;
+      osmUrl: string;
+      embedUrl: string;
+    };
+
     type Einsatz = {
       description: string;
       vehicle: string;
-      location: string;
+      location: EinsatzLocation;
     };
     const [einsatz, setEinsatz] = useState<Einsatz | null>(null);
+    const location = einsatz?.location;
+    const hasMap = typeof location === 'object' && location !== null;
 
     useEffect(() => {
       const es = new EventSource('/api/einsatz/stream');
@@ -40,7 +50,21 @@
             <p>{einsatz.vehicle}</p>
 
             <h3>Ort</h3>
-            <p>{einsatz.location}</p>
+            <p>{hasMap ? location.label : location}</p>
+            {hasMap && (
+              <>
+                <p>
+                  <a href={location.osmUrl} target="_blank" rel="noreferrer">
+                    In OpenStreetMap öffnen
+                  </a>
+                </p>
+                <iframe
+                  title="OpenStreetMap"
+                  src={location.embedUrl}
+                  style={{ border: 0, width: '100%', height: '250px' }}
+                />
+              </>
+            )}
           </div>
         ) : (
           <p>Keine Einsätze vorhanden</p>

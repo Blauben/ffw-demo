@@ -2,7 +2,52 @@ import emitter from '@/lib/emitter';
 
 export async function POST(req) {
   const body = await req.json();
-  emitter.emit('einsatz-update', body);
+  const enrichedBody = { ...body };
+  const location = typeof body.location === 'string' ? body.location.trim() : '';
+
+  if (location) {
+    try {
+      const query = new URLSearchParams({
+        q: location,
+        format: 'jsonv2',
+        limit: '1',
+      });
+      const response = await fetch(`https://nominatim.openstreetmap.org/search?${query.toString()}`, {
+        headers: {
+          'User-Agent': 'ffw-demo/1.0',
+        },
+      });
+
+      if (response.ok) {
+        const [result] = await response.json();
+        if (result?.lat && result?.lon) {
+          const lat = Number(result.lat);
+          const lon = Number(result.lon);
+
+          if (Number.isFinite(lat) && Number.isFinite(lon)) {
+            const bbox = [
+              (lon - 0.01).toFixed(5),
+              (lat - 0.01).toFixed(5),
+              (lon + 0.01).toFixed(5),
+              (lat + 0.01).toFixed(5),
+            ];
+
+            enrichedBody.location = {
+              label: location,
+              lat,
+              lon,
+              osmUrl: `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=15/${lat}/${lon}`,
+              embedUrl: `https://www.openstreetmap.org/export/embed.html?bbox=${bbox.join('%2C')}&layer=mapnik&marker=${lat}%2C${lon}`,
+            };
+          }
+        }
+      }
+    } catch {
+      // Keep the original location string if OpenStreetMap lookup fails.
+    }
+  }
+
+  emitter.emit('einsatz-update', enrichedBody);
 
   return Response.json({ success: true });
 }
