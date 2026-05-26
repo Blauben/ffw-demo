@@ -2,21 +2,23 @@
 
   import { useEffect, useState } from 'react';
   import './input/style.css';
+  const MAP_IFRAME_HEIGHT = 250;
+
+  type EinsatzLocation = string | {
+    label: string;
+    lat: number;
+    lon: number;
+    osmUrl: string;
+    embedUrl: string;
+  };
+
+  type Einsatz = {
+    description: string;
+    vehicle: string;
+    location: EinsatzLocation;
+  };
 
   export default function App() {
-    type EinsatzLocation = string | {
-      label: string;
-      lat: number;
-      lon: number;
-      osmUrl: string;
-      embedUrl: string;
-    };
-
-    type Einsatz = {
-      description: string;
-      vehicle: string;
-      location: EinsatzLocation;
-    };
     const [einsatz, setEinsatz] = useState<Einsatz | null>(null);
     const location = einsatz?.location;
     const hasMap = typeof location === 'object' && location !== null;
@@ -61,7 +63,7 @@
                 <iframe
                   title="OpenStreetMap"
                   src={location.embedUrl}
-                  style={{ border: 0, width: '100%', height: '250px' }}
+                  style={{ border: 0, width: '100%', height: `${MAP_IFRAME_HEIGHT}px` }}
                 />
               </>
             )}
