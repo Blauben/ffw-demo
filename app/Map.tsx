@@ -1,14 +1,15 @@
 import { MapContainer, Marker, TileLayer } from 'react-leaflet';
+import { LatLngExpression } from 'leaflet';
 import { Einsatz } from './model/types';
 
 export default function Map({ einsatz }: { einsatz: Einsatz }) {
+  const center: LatLngExpression = einsatz.selectedCoordinates
+    ? [einsatz.selectedCoordinates.lat, einsatz.selectedCoordinates.lon]
+    : [48.7008307, 11.345242];
+
   return (
     <MapContainer
-      center={
-        einsatz.selectedCoordinates
-          ? [einsatz.selectedCoordinates.lat, einsatz.selectedCoordinates.lon]
-          : [48.7008307, 11.345242]
-      }
+      center={center}
       zoom={15}
       scrollWheelZoom={true}
       style={{ height: '400px', width: '100%' }}
