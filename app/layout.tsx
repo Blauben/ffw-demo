@@ -1,21 +1,26 @@
-
 import './globals.css';
+import { Inter } from 'next/font/google';
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+});
 
 function ScriptTags() {
   return (
     <span>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-      integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-      crossOrigin=""
-    />
+      <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossOrigin=""
+      />
 
-    <script
-      src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-      integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-      crossOrigin=""
-    ></script>
+      <script
+        src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossOrigin=""
+      ></script>
     </span>
   );
 }
@@ -25,14 +30,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (<html>
-    <ScriptTags />
-    <body>
-      <div id="background">
-        <div id="main-content">
-          {children}
+  return (
+    <html lang="de" className={inter.variable}>
+      <body>
+        <ScriptTags />
+        <div id="background">
+          <div id="main-content">{children}</div>
         </div>
-      </div>
-    </body></html>)
+      </body>
+    </html>
+  );
 }
-
