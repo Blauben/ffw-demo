@@ -1,6 +1,10 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --color-background: #ffffff;
+  --color-foreground: #171717;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
   --font-sm: clamp(0.8rem, 0.17vw + 0.76rem, 0.9rem);
   --font-base: clamp(1rem, 0.34vw + 0.91rem, 1.19rem);
   --font-lg: clamp(1.25rem, 0.61vw + 1.1rem, 1.58rem);
@@ -35,17 +39,12 @@ section {
   padding-inline: clamp(1rem, 5vw, 3rem); /* fluid padding */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #820000;
     --foreground: #ededed;
+    --color-background: #820000;
+    --color-foreground: #ededed;
   }
 }
 
