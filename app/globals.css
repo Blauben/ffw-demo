@@ -139,11 +139,21 @@ div.card {
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
   align-items: start;
+  height: 100vh;
+}
+
+/* Each grid column is itself a flex column */
+.input-grid > div {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* prevent the column itself from overflowing */
+  min-height: 0; /* critical: allows flex child to shrink below content size */
 }
 
 .input-fields {
   display: flex;
   flex-direction: column;
+  overflow: scroll; /* allow the input fields to scroll if they overflow */
 }
 
 .save-button-container {
@@ -154,7 +164,7 @@ div.card {
 
 input,
 textarea {
-  padding: -var(--space-s);
+  padding: var(--space-s);
   border: 1px solid var(--foreground);
   border-radius: 4px;
   font-size: var(--font-lg);
