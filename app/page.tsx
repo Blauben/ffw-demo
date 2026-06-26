@@ -31,7 +31,7 @@ export default function App() {
 
   return (
     <main>
-      <h1>FFL Einsatz Demo</h1>
+      <h1>FFL Einsatz</h1>
 
       {einsatz ? (
         <div className="input-grid">
