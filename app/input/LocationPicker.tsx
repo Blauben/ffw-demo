@@ -16,19 +16,29 @@ function ClickHandler({ onSelect }: { onSelect: (coordinates: Coordinates) => vo
   return null;
 }
 
+function ZoomHandler({ onZoomChange }: { onZoomChange: (zoom: number) => void }) {
+  const map = useMapEvents({
+    zoomend() {
+      onZoomChange(map.getZoom());
+    },
+  });
+  return null;
+}
+
 export default function LocationPicker({
   markerUpdate,
 }: {
-  markerUpdate: (coordinates: Coordinates) => void;
+  markerUpdate: (coordinates: Coordinates, zoom: number) => void;
 }) {
   const [selectedCoordinates, setSelectedCoordinates] = useState<Coordinates | null>(
     DEFAULT_CENTER ? { lat: DEFAULT_CENTER[0], lon: DEFAULT_CENTER[1] } : null
   );
+  const [zoom, setZoom] = useState(DEFAULT_ZOOM);
   useEffect(() => {
     if (selectedCoordinates) {
-      markerUpdate(selectedCoordinates);
+      markerUpdate(selectedCoordinates, zoom);
     }
-  }, [selectedCoordinates, markerUpdate]);
+  }, [selectedCoordinates, markerUpdate, zoom]);
 
   return (
     <MapContainer center={DEFAULT_CENTER} zoom={DEFAULT_ZOOM} scrollWheelZoom={true}>
@@ -37,6 +47,7 @@ export default function LocationPicker({
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <ClickHandler onSelect={setSelectedCoordinates} />
+      <ZoomHandler onZoomChange={setZoom} />
       <Marker
         position={
           selectedCoordinates ? [selectedCoordinates.lat, selectedCoordinates.lon] : DEFAULT_CENTER

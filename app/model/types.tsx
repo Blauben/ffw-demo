@@ -8,4 +8,5 @@ export type Einsatz = {
   vehicle: string;
   location: string;
   selectedCoordinates: Coordinates | null;
+  zoomLevel: number;
 };

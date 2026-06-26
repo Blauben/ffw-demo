@@ -14,13 +14,14 @@ export default function InputPage() {
   const [vehicle, setVehicle] = useState('');
   const [location, setLocation] = useState('');
   const [selectedCoordinates, setSelectedCoordinates] = useState<Coordinates | null>(null);
+  const [zoomLevel, setZoomLevel] = useState(13); // Default zoom level
 
   const handleSave = async () => {
     try {
       const response = await fetch('/api/einsatz/update', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ description, vehicle, location, selectedCoordinates }),
+        body: JSON.stringify({ description, vehicle, location, selectedCoordinates, zoomLevel }),
       });
       if (!response.ok) throw new Error('Einsatz konnte nicht gesendet werden');
       console.log('Einsatz-Update gesendet:', {
@@ -28,14 +29,16 @@ export default function InputPage() {
         vehicle,
         location,
         selectedCoordinates,
+        zoomLevel,
       });
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleLocationSelect = useCallback((coords: Coordinates) => {
+  const handleLocationSelect = useCallback((coords: Coordinates, zoom: number) => {
     setSelectedCoordinates(coords);
+    setZoomLevel(zoom);
   }, []); // empty deps — function never needs to change
 
   return (
