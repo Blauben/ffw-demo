@@ -1,6 +1,5 @@
 'use client';
 import { useCallback, useState } from 'react';
-import './style.css';
 import dynamic from 'next/dynamic';
 import { Coordinates } from '../model/types';
 
@@ -84,7 +83,7 @@ export default function InputPage() {
         </div>
       </div>
 
-      <div className="location-picker-container">
+      <div className="leaflet-container">
         <LocationPicker markerUpdate={handleLocationSelect} />
       </div>
     </div>
