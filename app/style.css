@@ -1,11 +1,11 @@
 .card {
-    background: var(--background-card);
-    border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  background: var(--background-card);
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
 }
 
 #einsatz-details {
-    height: 70%;
-    margin-bottom: --var(--space-m);
-    overflow: hidden;
+  height: 70%;
+  overflow-wrap: break-word;
+  margin-bottom: --var(--space-m);
 }

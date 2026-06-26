@@ -25,11 +25,7 @@ export default function Map({ einsatz }: { einsatz: Einsatz }) {
     : [48.7008307, 11.345242];
 
   return (
-    <MapContainer
-      center={initialCenter}
-      zoom={einsatz.zoomLevel ?? 13}
-      scrollWheelZoom={false}
-    >
+    <MapContainer center={initialCenter} zoom={einsatz.zoomLevel ?? 13} scrollWheelZoom={false}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

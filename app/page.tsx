@@ -29,30 +29,30 @@ export default function App() {
     return () => es.close();
   }, []);
 
-      return einsatz ? (
-        <div className="input-grid" id="einsatz-display">
-          <div>
-                  <h1>FFL Einsatz</h1>
-          <div className="card" id="einsatz-details">
-            <h2>Einsatz</h2>
-            <p>{einsatz.description}</p>
+  return einsatz ? (
+    <div className="input-grid" id="einsatz-display">
+      <div>
+        <h1>FFL Einsatz</h1>
+        <div className="card" id="einsatz-details">
+          <h2>Einsatz</h2>
+          <p>{einsatz.description}</p>
 
-            <h2>Fahrzeug</h2>
-            <p>{einsatz.vehicle}</p>
+          <h2>Fahrzeug</h2>
+          <p>{einsatz.vehicle}</p>
 
-            <h2>Ort</h2>
-            <p>{einsatz.location}</p>
-          </div>
-          </div>
-
-          <div className="leaflet-container">
-            <Map einsatz={einsatz} />
-          </div>
+          <h2>Ort</h2>
+          <p>{einsatz.location}</p>
         </div>
-      ) : (
-        <div>
+      </div>
+
+      <div className="leaflet-container">
+        <Map einsatz={einsatz} />
+      </div>
+    </div>
+  ) : (
+    <div>
       <h1>FFL Einsatz</h1>
-        <p>Keine Einsätze vorhanden</p>
-        </div>
-      );
+      <p>Keine Einsätze vorhanden</p>
+    </div>
+  );
 }
